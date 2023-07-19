@@ -16,9 +16,10 @@ jobs:
 
       - name: Setup Flutter SDK
         if: steps.check_files.outputs.files_exists == 'true'
-        uses: subosito/flutter-action@v2.2
+        uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
+           version: 3.0.2
           
       
       - name: Check flutter sdk version
