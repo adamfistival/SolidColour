@@ -1,30 +1,31 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:solidcolour/main.dart';
+import 'package:provider/provider.dart';
+import 'package:solidcolour/features/color_changer/models/random_colour_generator.dart';
+import 'package:solidcolour/features/color_changer/viewmodels/colour_changer_viewmodel.dart';
+import 'package:solidcolour/features/color_changer/views/colour_change_screen.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('ColourChangeScreen changes colour upon tap',
+      (WidgetTester tester) async {
+    /// Arrange: Setup ColorChangerViewModel and ColorChangerScreen for test
+    final colorChangerViewModel = ColourChangerViewModel(
+      colorGenerator: RandomColourGenerator(),
+    );
+    await tester.pumpWidget(
+      ChangeNotifierProvider<ColourChangerViewModel>.value(
+        value: colorChangerViewModel,
+        child: MaterialApp(home: ColourChangeScreen()),
+      ),
+    );
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    /// Act: Perform the tap action
+    final initialColor = colorChangerViewModel.currentColor;
+    await tester.tap(find.byType(GestureDetector));
+    await tester.pumpAndSettle();
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    /// Assert: Check if the color is now changed
+    final newColor = colorChangerViewModel.currentColor;
+    expect(newColor, isNot(equals(initialColor)));
   });
 }

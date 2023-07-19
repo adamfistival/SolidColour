@@ -1,12 +1,59 @@
-# flutter_project_template
-📖 Template for flutter projects using solid_lints, CI for tests and analysis.
+# Color Changer App in Flutter
 
-- Uses latest stable flutter
-- Repo name as your project name
-- Organization from your profile email address or default
+A simple Flutter app that changes the background color every time the user taps on the screen.
+This app utilizes the Provider package for state management and follows the Model-View-ViewModel (MVVM) architecture.
 
-# Usage
-1. Press "Use this template" on the menu.
-2. Fill Github form with your new repo name and press "Create repository from template"
-3. Wait for it to be created and set up action is complete. In a couple of minutes, you'll see the flutter project created in your repo once Github Actions are complete.
-4. Clone and code.
+## Table of Contents
+
+- [Good Naming Conventions](#good-naming-conventions)
+- [Clean, DRY, and KISS](#clean-dry-and-kiss)
+- [Structure](#structure)
+- [Provider State Management](#provider-state-management)
+- [Running on Android Emulator](#running-on-android-emulator)
+- [Test](#unit-and-widget-test)
+
+## Good Naming Conventions
+
+Clear and descriptive names are used for classes, functions, and variables to improve code readability and maintainability.
+
+- `RandomColourGenerator`: A class for generating random colours.
+- `ColourChangerViewModel`: A ViewModel class for handling colour changes.
+- `ColourChangeScreen`: A UI class for rendering colour changes on the screen.
+
+## Clean, DRY, and KISS
+
+The code adheres to the principles of Clean, DRY (Don't Repeat Yourself), and KISS (Keep it Simple, Stupid).
+
+- **Clean**: Each class or function has a single, clear responsibility.
+- **DRY**: Repetition is minimized; colour generation is defined once and used as needed.
+- **KISS**: The code is straightforward and easy to follow.
+
+## Structure
+
+The app is organized into the following structure:
+
+- `lib/`: Contains all Dart code.
+- `main.dart`: The application's entry point.
+- `features/color_changer/`: Contains classes for the Color Changer feature.
+  - `models/`: Contains the `RandomColourGenerator` class.
+  - `viewmodels/`: Contains the `ColourChangerViewModel` class.
+  - `views/`: Contains the `ColourChangeScreen` class.
+
+## Provider State Management
+
+The Provider package is used for efficient state management by providing shared data to widgets in the tree.
+The `Consumer` widget in the `ColourChangeScreen` class listens for changes in the `ColourChangerViewModel` and rebuilds the UI when the colour changes.
+
+## Running on Android Emulator
+
+Follow these steps to run the app in an Android emulator:
+
+1. Install the Android SDK and set up an emulator.
+2. Open a terminal and navigate to the root of the Flutter project.
+3. Run `flutter doctor` to check for any dependencies issues.
+4. Launch your emulator with `flutter emulators --launch <emulator_id>`.
+5. Run `flutter run` to start the app on the emulator.
+
+## Test 
+
+Provided two type of test Unit Test and Widget Test
