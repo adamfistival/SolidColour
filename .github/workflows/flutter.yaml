@@ -30,7 +30,7 @@ jobs:
       
       - name: Setup Solid Lint
         if: steps.check_files.outputs.files_exists == 'true'
-        run: flutter pub add --dev solid
+        run: dart pub add --dev solid
 
       - name: Solid Lint
         if: steps.check_files.outputs.files_exists == 'true'
