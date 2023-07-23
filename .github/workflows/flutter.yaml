@@ -17,17 +17,12 @@ jobs:
         with:
           files: "pubspec.yaml"
           
-      - name: Setup Dart SDK
-        if: steps.check_files.outputs.files_exists == 'true'
-        uses: dart-lang/setup-dart@v1
-        with:
-          sdk: "3.0.6" 
-
       - name: Setup Flutter SDK
         if: steps.check_files.outputs.files_exists == 'true'
         uses: flutter-actions/setup-flutter@v2
         with:
           channel: stable
+          flutter-version: ''
 
       - name: Get dependencies
         if: steps.check_files.outputs.files_exists == 'true'
