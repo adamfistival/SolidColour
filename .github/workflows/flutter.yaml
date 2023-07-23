@@ -1,8 +1,9 @@
-name: Application ON Push & PR DO Code check
+name: Application CI
+
 on:
   push:
   pull_request:
-
+      
 jobs:
   code-check:
     runs-on: ubuntu-latest
@@ -15,16 +16,17 @@ jobs:
         uses: andstor/file-existence-action@v1
         with:
           files: "pubspec.yaml"
-
+          
       - name: Setup Flutter SDK
         if: steps.check_files.outputs.files_exists == 'true'
         uses: flutter-actions/setup-flutter@v2
         with:
-          version: 'latest'
+          channel: stable
+          version: '3.10.6'
 
       - name: Get dependencies
         if: steps.check_files.outputs.files_exists == 'true'
-        run: flutter pub get
+        run: flutter packages get
 
       - name: Setup Solid Lint
         if: steps.check_files.outputs.files_exists == 'true'
@@ -37,8 +39,7 @@ jobs:
           if [ -d lib ]; then dirs_to_analyse+=" lib"; fi
           if [ -d test ]; then dirs_to_analyse+=" test"; fi
 
-          if [ "$dirs_to_analyse" != "" ]
-          then
+          if [ "$dirs_to_analyse" != "" ]; then
             flutter analyze $dirs_to_analyse
           fi
 

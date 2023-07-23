@@ -117,10 +117,10 @@ packages:
     dependency: transitive
     description:
       name: dart_code_metrics
-      sha256: "3dede3f7abc077a4181ec7445448a289a9ce08e2981e6a4d49a3fb5099d47e1f"
+      sha256: "1dc1fa763b73ed52147bd91b015d81903edc3f227b77b1672fcddba43390ed18"
       url: "https://pub.dev"
     source: hosted
-    version: "5.7.6"
+    version: "5.7.5"
   dart_code_metrics_presets:
     dependency: transitive
     description:
@@ -332,10 +332,10 @@ packages:
     dependency: "direct dev"
     description:
       name: solid_lints
-      sha256: "308d9b5f2505a6bcd0037750971dbf87a7cc7d844cb633f7ca332467a07353e2"
+      sha256: "957a017aeba7c2fef04d5e8a7113279994508c88f951800addd1424035a4615a"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.16"
+    version: "0.0.17"
   source_span:
     dependency: transitive
     description:
