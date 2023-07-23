@@ -40,6 +40,7 @@ jobs:
           if [ -d test ]; then dirs_to_analyse+=" test"; fi
           if [ dirs_to_analyse != "" ]
           then
+            cd /home/runner/work/SolidColour
             dart run dart_code_metrics:metrics \
               analyze \
               $dirs_to_analyse \
