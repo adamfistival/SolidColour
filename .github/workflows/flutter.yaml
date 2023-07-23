@@ -1,5 +1,7 @@
 name: Application ON Push & PR DO Code check
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
 
 jobs:
   code-check:
@@ -7,7 +9,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-          
+
       - name: Check file existence
         id: check_files
         uses: andstor/file-existence-action@v1
@@ -16,21 +18,14 @@ jobs:
 
       - name: Setup Flutter SDK
         if: steps.check_files.outputs.files_exists == 'true'
-        uses: subosito/flutter-action@v2
+        uses: flutter-actions/setup-flutter@v2
         with:
-          flutter-version: "3.0.6"
-          channel: 'stable'
-          
-          
-      
-      - name: Check flutter sdk version
-        if: steps.check_files.outputs.files_exists == 'true'
-        run: flutter --version
-      
+          version: 'latest'
+
       - name: Get dependencies
         if: steps.check_files.outputs.files_exists == 'true'
         run: flutter pub get
-      
+
       - name: Setup Solid Lint
         if: steps.check_files.outputs.files_exists == 'true'
         run: dart pub add --dev solid
@@ -41,8 +36,8 @@ jobs:
           dirs_to_analyse=""
           if [ -d lib ]; then dirs_to_analyse+=" lib"; fi
           if [ -d test ]; then dirs_to_analyse+=" test"; fi
-        
-          if [ dirs_to_analyse != "" ]
+
+          if [ "$dirs_to_analyse" != "" ]
           then
             flutter analyze $dirs_to_analyse
           fi
@@ -53,11 +48,4 @@ jobs:
 
       - name: Run tests
         if: steps.check_files.outputs.files_exists == 'true'
-        run: |
-          # run tests if `test` folder exists
-          if [ -d test ]
-          then
-              flutter test -r expanded
-          else
-              echo "Tests not found."
-          fi
+        run: flutter test --machine
