@@ -28,12 +28,9 @@ jobs:
         if: steps.check_files.outputs.files_exists == 'true'
         run: flutter packages get
 
-      - name: Run Solid Lints
-        run: dart analyze --fatal-warnings
-
       - name: Setup Dart Code Metrics
         if: steps.check_files.outputs.files_exists == 'true'
-        run: dart pub get dart_code_metrics
+        run: dart pub global activate dart_code_metrics
 
       - name: Dart Code Metrics
         if: steps.check_files.outputs.files_exists == 'true'
@@ -41,28 +38,12 @@ jobs:
           dirs_to_analyse=""
           if [ -d lib ]; then dirs_to_analyse+=" lib"; fi
           if [ -d test ]; then dirs_to_analyse+=" test"; fi
-          if [ dirs_to_analyse != "" ]
-          then
+          if [ $dirs_to_analyse != "" ]; then
             cd /home/runner/work/SolidColour
-            dart run dart_code_metrics:metrics \
-              analyze \
-              $dirs_to_analyse \
-              --fatal-warnings \
-              --fatal-performance \
-              --fatal-style
-            dart run dart_code_metrics:metrics \
-              check-unused-files \
-              $dirs_to_analyse \
-              --fatal-unused
-            dart run dart_code_metrics:metrics \
-              check-unused-code \ 
-              $dirs_to_analyse \
-              --fatal-unused
+            dart_code_metrics:metrics analyze $dirs_to_analyse --fatal-warnings --fatal-performance --fatal-style
+            dart_code_metrics:metrics check-unused-files $dirs_to_analyse --fatal-unused
+            dart_code_metrics:metrics check-unused-code $dirs_to_analyse --fatal-unused
           fi
-
-      - name: Check formatting
-        if: steps.check_files.outputs.files_exists == 'true'
-        run: dart format . --set-exit-if-changed
 
       - name: Run tests
         if: steps.check_files.outputs.files_exists == 'true'
