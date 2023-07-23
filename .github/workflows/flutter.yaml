@@ -27,6 +27,10 @@ jobs:
       - name: Get dependencies
         if: steps.check_files.outputs.files_exists == 'true'
         run: flutter packages get
+        
+      - name: Run Solid Lints
+        run: dart analyze --fatal-warnings
+
 
       - name: Setup Dart Code Metrics
         if: steps.check_files.outputs.files_exists == 'true'
