@@ -29,7 +29,7 @@ class ColourChangeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text('Ontap Colour Generator')),
+        title: const Center(child: Text('Ontap Colour Generators')),
       ),
       body: Center(
         child: Consumer<ColourChangerViewModel>(
